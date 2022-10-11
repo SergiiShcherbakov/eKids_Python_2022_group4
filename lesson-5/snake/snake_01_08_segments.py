@@ -1,7 +1,8 @@
 import turtle
 import time
+import random
 
-delay = 0.1
+delay = 0.2
 
 # set up the screen
 wn = turtle.Screen()
@@ -18,6 +19,16 @@ head.color("black")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
+
+# Snake food
+food = turtle.Turtle()
+food.speed(0)
+food.shape("circle")
+food.color("red")
+food.penup()
+food.goto(0, 100)
+
+segments=[]
 
 # Pen
 pen = turtle.Turtle()
@@ -80,13 +91,46 @@ while True:
         head.goto(0, 0)
         head.direction = "stop"
 
-        # Reset the delay
-        delay = 0.1
+        # Hide the segments
+        for segment in segments:
+            segment.goto(1000,1000)
 
-    move()
+        # Clear the segments list
+        segments.clear()
+
+        # Reset the delay
+        delay = 0.2
 
     pen.clear()
     pen.write("X : {}  Y : {} direct : {}".format(head.xcor(), head.ycor(), head.direction), align="center",
               font=("Courier", 14, "normal"))
+
+    if head.distance(food) < 20:
+        # move the food to a random spot
+        x = random.randint(-285, 285)
+        y = random.randint(-285, 285)
+        food.goto(x, y)
+
+        # Add a segment
+        new_segment=turtle.Turtle()
+        new_segment.speed(0)
+        new_segment.shape("square")
+        new_segment.color("grey")
+        new_segment.penup()
+        segments.append(new_segment)
+
+    # Move the end segment first in reverse order
+    for index in range(len(segments)-1,0,-1):
+        x=segments[index-1].xcor()
+        y=segments[index-1].ycor()
+        segments[index].goto(x,y)
+
+    # Move segment 0 to where the head is
+    if len(segments)>0:
+        x=head.xcor()
+        y=head.ycor()
+        segments[0].goto(x,y)
+
+    move()
 
     time.sleep(delay)
