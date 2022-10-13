@@ -1,7 +1,9 @@
+# The file needs to talk about random function
 import turtle
 import time
+import random
 
-delay = 0.1
+delay = 0.5
 
 # set up the screen
 wn = turtle.Screen()
@@ -18,6 +20,14 @@ head.color("black")
 head.penup()
 head.goto(0, 0)
 head.direction = "stop"
+
+# Snake food
+food = turtle.Turtle()
+food.speed(0)
+food.shape("circle")
+food.color("red")
+food.penup()
+food.goto(0, 100)
 
 # Pen
 pen = turtle.Turtle()
@@ -88,5 +98,11 @@ while True:
     pen.clear()
     pen.write("X : {}  Y : {} direct : {}".format(head.xcor(), head.ycor(), head.direction), align="center",
               font=("Courier", 14, "normal"))
+
+    if head.distance(food) < 20:
+        # move the food to a random spot
+        x = random.randint(-285, 285)
+        y = random.randint(-285, 285)
+        food.goto(x, y)
 
     time.sleep(delay)
