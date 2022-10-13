@@ -50,3 +50,22 @@ print('age_0 >= 21 or age_1 >= 21, ' + str(result))
 age_0 = 18
 result = age_0 >= 21 or age_1 >= 21
 print('age_0 >= 21 or age_1 >= 21, ' + str(result))
+
+
+print('\n\n Boolean variable')
+age = 6
+print("age = 6")
+test = age == 6
+print(f"test = age == 6 -> test value is: {test}")
+test = age > 6
+print(f"test = age > 6 ->test value is: {test}")
+test = age < 6
+print(f"test = age < 6 ->test value is: {test}")
+test = age <= 6
+print(f"test = age <= 6 ->test value is: {test}")
+test = age >= 6
+print(f"test = age >= 6 ->test value is: {test}")
+test = age != 6
+print(f"test = age != 6 ->test value is: {test}")
+print(type(test))
+print(type(test) == bool)
