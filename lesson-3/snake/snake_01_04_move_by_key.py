@@ -46,6 +46,11 @@ def go_right():
     head.setx(x + 20)
 
 
+def key_down(x, y):
+    print(f"coord x: {x}, coord y:{y}")
+    head.setx(x)
+    head.sety(y)
+
 
 # keyboard bindings
 wn.listen()
@@ -53,7 +58,7 @@ wn.onkeypress(go_up,"Up")
 wn.onkeypress(go_down,"Down")
 wn.onkeypress(go_left,"Left")
 wn.onkeypress(go_right,"Right")
-
+wn.onclick(key_down, 1)
 
 
 while True:
