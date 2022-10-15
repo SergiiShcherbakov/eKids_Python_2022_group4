@@ -45,9 +45,7 @@ def go_right():
     x = head.xcor()
     head.setx(x + 20)
 
-# def any_key_down():
-#     pen.clear()
-#     pen.write("works")
+
 
 # keyboard bindings
 wn.listen()
@@ -55,7 +53,8 @@ wn.onkeypress(go_up,"Up")
 wn.onkeypress(go_down,"Down")
 wn.onkeypress(go_left,"Left")
 wn.onkeypress(go_right,"Right")
-# wn.onkeypress(any_key_down)
+
+
 
 while True:
     wn.update()
