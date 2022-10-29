@@ -2,7 +2,7 @@ import turtle
 import time
 import random
 
-delay = 0.2
+delay = 0.5
 
 # set up the screen
 wn = turtle.Screen()
@@ -99,7 +99,7 @@ while True:
         segments.clear()
 
         # Reset the delay
-        delay = 0.2
+        delay = 0.5
 
     pen.clear()
     pen.write("X : {}  Y : {} direct : {}".format(head.xcor(), head.ycor(), head.direction), align="center",
@@ -119,7 +119,7 @@ while True:
         new_segment.penup()
         segments.append(new_segment)
 
-    # Move the end segment first in reverse order
+    # Переставляє всі частини тіла окрім першої на місце попередньої частини тіла
     for index in range(len(segments)-1,0,-1):
         x=segments[index-1].xcor()
         y=segments[index-1].ycor()
