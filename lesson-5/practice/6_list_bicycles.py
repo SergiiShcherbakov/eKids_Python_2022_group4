@@ -3,7 +3,7 @@ bicycles = ['trek', 'cannondale', 'redline', 'specialized']
 print(bicycles)
 print(f"довжина масиву: {len(bicycles)}")
 # який останній індекс масиву при довжені чотири?
-print(f"довжина масиву: {len(bicycles)}")
+print(f"останній індекс: {len(bicycles)-1}")
 
 
 # index 0 = 'trek'
@@ -19,12 +19,13 @@ print(f"довжина масиву: {len(bicycles)}")
 # print('bicycles[3] = ' + bicycles[3])
 #
 # print('bicycles[-1] = ' + bicycles[-1])
+# print('bicycles[len(bicycles)-1] = ' + bicycles[len(bicycles)-1])
 # print('bicycles[-2] = ' + bicycles[-2])
 # print('bicycles[-3] = ' + bicycles[-3])
 # print('bicycles[-4] = ' + bicycles[-4])
 #
 # print(f"print all list {bicycles}")
-# print('bicycles[2:3] = ' + str(bicycles[1:3]))
+# print('bicycles[1:4] = ' + str(bicycles[1:4]))
 # print('bicycles[2:] = ' + str(bicycles[2:]))
 # print('bicycles[:2] = ' + str(bicycles[:2]))
 #
@@ -46,13 +47,15 @@ print(f"довжина масиву: {len(bicycles)}")
 # bicycles[1] = 44
 # bicycles[2] = True
 # bicycles[3] = 3.14
-# bicycles[4] = False
+# # bicycles[4] = False
 # print(f"print all list {bicycles}")
 #
 # bicycles.append("Comanche")
 # print(f"print all list after bicycles.append(\"Comanche\") {bicycles}")
 # bicycles.insert(1, "Merida")
 # print(f"print all list after bicycles.insert(1, \"Merida\") {bicycles}")
+# bicycles.insert(4, "Merida22")
+# print(f"print all list after bicycles.insert(4, \"Merida22\") {bicycles}")
 
 
 
@@ -60,6 +63,7 @@ print(f"довжина масиву: {len(bicycles)}")
 
 # print('\n\n Як видалити данні з масива!-------------------------------')
 # bicycles = ['Scott', 'Merida', 44, True, 3.14, 'Comanche']
+# print(f"наш масив: {bicycles}")
 # bicycles.remove("Merida")
 # print(f"print all list after bicycles.remove(\"Merida\") {bicycles}")
 #
