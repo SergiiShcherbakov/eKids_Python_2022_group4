@@ -5,8 +5,8 @@ import random
 delay = 0.2
 
 # Score
-score=0
-high_score=0
+score = 0
+high_score = 0
 
 # set up the screen
 wn = turtle.Screen()
@@ -32,7 +32,7 @@ food.color("red")
 food.penup()
 food.goto(0, 100)
 
-segments=[]
+segments = []
 
 # Pen
 pen = turtle.Turtle()
@@ -65,19 +65,21 @@ def go_right():
         head.direction = "right"
 
 
-def move():
+def move_snake():
+    move_tail()
+    move_head()
+
+
+def move_head():
     if head.direction == "up":
         y = head.ycor()
         head.sety(y + 20)
-
     if head.direction == "down":
         y = head.ycor()
         head.sety(y - 20)
-
     if head.direction == "left":
         x = head.xcor()
         head.setx(x - 20)
-
     if head.direction == "right":
         x = head.xcor()
         head.setx(x + 20)
@@ -90,93 +92,98 @@ wn.onkeypress(go_down, "Down")
 wn.onkeypress(go_left, "Left")
 wn.onkeypress(go_right, "Right")
 
+
+def restart_game():
+    global segment, score, delay
+    time.sleep(1)
+    head.goto(0, 0)
+    head.direction = "stop"
+    # Hide the segments
+    for segment in segments:
+        segment.goto(1000, 1000)
+    # Clear the segments list
+    segments.clear()
+    # Reset the score
+    score = 0
+    # Reset the delay
+    delay = 0.2
+    print_score()
+
+
+def is_head_out():
+    return head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290
+
+
+def move_tail():
+    global x, y
+    # Move the end segment first in reverse order
+    for index in range(len(segments) - 1, 0, -1):
+        x = segments[index - 1].xcor()
+        y = segments[index - 1].ycor()
+        segments[index].goto(x, y)
+        # Move segment 0 to where the head is
+    if len(segments) > 0:
+        x = head.xcor()
+        y = head.ycor()
+        segments[0].goto(x, y)
+
+
+def print_score():
+    pen.clear()
+    pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
+
+
+def is_food_eaten(head):
+    return head.distance(food) < 20
+
+
+def update_scores():
+    global score, high_score
+    score += 10
+    if score > high_score:
+        high_score = score
+
+
+def create_new_food():
+    global x, y
+    # move the food to a random spot
+    x = random.randint(-285, 285)
+    y = random.randint(-285, 285)
+    food.goto(x, y)
+
+
+def add_new_segment():
+    new_segment = turtle.Turtle()
+    new_segment.speed(0)
+    new_segment.shape("square")
+    new_segment.color("grey")
+    new_segment.penup()
+    segments.append(new_segment)
+
+
+def is_snake_bit_segment(segment, head):
+    return segment.distance(head) < 20
+
+
 while True:
     wn.update()
 
-    # Check for a collision with the border
-    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
-        time.sleep(1)
-        head.goto(0, 0)
-        head.direction = "stop"
+    if is_head_out():
+        restart_game()
 
-        # Hide the segments
-        for segment in segments:
-            segment.goto(1000,1000)
-
-        # Clear the segments list
-        segments.clear()
-
-        # Reset the score
-        score=0
-
-        # Reset the delay
-        delay = 0.2
-
-        pen.clear()
-        pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "normal"))
-
-    if head.distance(food) < 20:
-        # move the food to a random spot
-        x = random.randint(-285, 285)
-        y = random.randint(-285, 285)
-        food.goto(x, y)
-
-        # Add a segment
-        new_segment=turtle.Turtle()
-        new_segment.speed(0)
-        new_segment.shape("square")
-        new_segment.color("grey")
-        new_segment.penup()
-        segments.append(new_segment)
-
+    if is_food_eaten(head):
+        create_new_food()
+        add_new_segment()
         # Shorten the delay
         delay -= 0.001
+        update_scores()
+        print_score()
 
-        # Increase the score
-        score+=10
-
-        if score > high_score:
-            high_score = score
-
-        pen.clear()
-        pen.write("Score: {}  High Score: {}".format(score,high_score),align="center",font=("Courier", 24, "normal"))
-
-    # Move the end segment first in reverse order
-    for index in range(len(segments)-1,0,-1):
-        x=segments[index-1].xcor()
-        y=segments[index-1].ycor()
-        segments[index].goto(x,y)
-
-    # Move segment 0 to where the head is
-    if len(segments)>0:
-        x=head.xcor()
-        y=head.ycor()
-        segments[0].goto(x,y)
-
-    move()
+    move_snake()
 
     # Check for head collision with the body segments
     for segment in segments:
-        if segment.distance(head)<20:
-            time.sleep(1)
-            head.goto(0,0)
-            head.direction="stop"
-
-            # Hide the segments
-            for segment in segments:
-                segment.goto(1000,1000)
-
-            # Clear the segments list
-            segments.clear()
-
-            # Reset the score
-            score = 0
-
-            #Reset the delay
-            delay = 0.2
-
-            pen.clear()
-            pen.write("Score: {}  High Score: {}".format(score, high_score), align="center",font=("Courier", 24, "normal"))
-
+        if is_snake_bit_segment(segment, head):
+            restart_game()
 
     time.sleep(delay)
